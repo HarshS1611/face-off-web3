@@ -66,14 +66,14 @@ const ModalChallenge = ({ open, handleClose }) => {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 text-black">
+    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 backdrop-blur-sm text-black">
       <div className="bg-white w-96 rounded-lg p-6 relative max-h-[80vh] overflow-y-auto scrollbar-hide">
         {/* Progress Bar */}
         <div className="mb-4">
           <div className="w-80 h-2 bg-gray-200 rounded-full">
             <div
               className={`h-2 rounded-full ${
-                page === 1 ? "bg-blue-500" : "bg-green-500"
+                page === 1 ? "bg-gray-400" : "bg-gray-700"
               }`}
               style={{ width: page === 1 ? "50%" : "100%" }}
             />
@@ -90,7 +90,7 @@ const ModalChallenge = ({ open, handleClose }) => {
                   key={category.name}
                   className={`border rounded-lg p-4 flex flex-col items-center cursor-pointer transition-transform ${
                     selectedCategory === category.name
-                      ? "bg-blue-100 border-blue-500 scale-105"
+                      ? "bg-gray-300 border-gray-700 scale-105"
                       : "bg-gray-100"
                   }`}
                   onClick={() => handleCategorySelect(category.name)}
@@ -138,7 +138,7 @@ const ModalChallenge = ({ open, handleClose }) => {
                     }))
                   }
                 />
-                <div className="group peer bg-white rounded-full duration-300 w-16 h-8 ring-2 ring-black after:duration-300 after:bg-black peer-checked:after:bg-green-300 peer-checked:ring-green-300 after:rounded-full after:absolute after:h-6 after:w-6 after:top-1 after:left-1 after:flex after:justify-center after:items-center peer-checked:after:translate-x-8 peer-hover:after:scale-95"></div>
+                <div className="group peer bg-white rounded-full duration-300 w-16 h-8 ring-2 ring-black after:duration-300 after:bg-black peer-checked:after:bg-blue-300 peer-checked:ring-blue-300 after:rounded-full after:absolute after:h-6 after:w-6 after:top-1 after:left-1 after:flex after:justify-center after:items-center peer-checked:after:translate-x-8 peer-hover:after:scale-95"></div>
               </label>
             </div>
 
@@ -269,7 +269,7 @@ const ModalChallenge = ({ open, handleClose }) => {
 
             <button
               onClick={handleFormSubmit}
-              className="bg-green-500 text-white px-4 py-2 rounded-lg w-full mb-2"
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg w-full mb-2"
             >
               Submit
             </button>
