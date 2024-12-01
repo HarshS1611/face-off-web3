@@ -11,7 +11,7 @@ const Home = () => {
     challengeProgress: 68,
   };
   // Example total tokens earned
-  const [totalTokens, setTotalTokens] = useState(700);
+  const [totalTokens, setTotalTokens] = useState(1800);
 
   // Determine the color and progress based on totalTokens
   const getLevelDetails = (tokens) => {

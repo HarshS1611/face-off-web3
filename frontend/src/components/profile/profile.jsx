@@ -2,7 +2,7 @@
 import ProfileImg from '../../assets/profile.webp';
 export default function Profile() {
     return (
-        <div className="px-4">
+        <div className="px-4 scroll-auto h-[80vh] overflow-y-auto scrollbar-hide">
             <p className="text-2xl font-bold">Profile</p>
 
             <div className='flex my-3 justify-center'>

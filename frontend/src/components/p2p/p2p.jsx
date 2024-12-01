@@ -11,7 +11,7 @@ export default function P2P() {
   const handleClose = () => setOpenModal(false);
 
   return (
-    <div>
+    <div className="scroll-auto h-[78vh] overflow-y-auto scrollbar-hide">
       <p className="text-2xl font-bold p-4">P2P</p>
       <div className="flex justify-center">
         <div
