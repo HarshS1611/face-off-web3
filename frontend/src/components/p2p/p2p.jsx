@@ -5,13 +5,13 @@ export default function P2P() {
     <div>
       <p className="text-2xl font-bold p-4">P2P</p>
       <div className="flex justify-center">
-        <button
+        <div
           className="text-center bg-[#282828] border-2 border-[#3E3E3E] w-full mx-5 h-full rounded-lg inline-flex items-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-[--background] text-[--muted-foreground] px-4 py-4 justify-start text-sm font-normal shadow-none"
           type="button"
         >
           <input
             placeholder="Enter Invite Code"
-            className="text-white outline-none bg-transparent"
+            className="text-white outline-none w-full bg-transparent"
           ></input>
 
           <div className="flex w-full justify-end">
@@ -19,7 +19,7 @@ export default function P2P() {
               Join
             </button>
           </div>
-        </button>
+        </div>
       </div>
 
       <div className="flex gap-2 my-10 px-4">
@@ -60,8 +60,8 @@ export default function P2P() {
         </div>
       </div>
 
-      <div className="absolute bottom-20 right-[36%]">
-        <button className="bg-black rounded-full p-4 text-xl font-bold px-6">
+      <div className="absolute bottom-20 right-2 md:right-[36%]">
+        <button className="bg-black rounded-full p-4 text-md md:text-xl font-bold px-6">
           Create
         </button>
       </div>
