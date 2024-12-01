@@ -12,8 +12,8 @@ import Home from './components/home/home';
 
 function App() {
   return (
-    <div className='flex w-full justify-center'>
-      <div className='border h-screen w-full md:w-96 shadow-xl'>
+    <div className='flex w-full  bg-black  justify-center'>
+      <div className=' h-screen w-full bg-[#282828] text-white md:w-[550px] shadow-xl'>
         <Navbar/>
         <Router>
           <Routes>
