@@ -1,6 +1,14 @@
 import { useState } from "react";
+import ModalChallenge from "./ModalChallenge";
 export default function P2P() {
   const [status, setStatus] = useState("registration");
+
+  const [openModal, setOpenModal] = useState(false);
+
+  // Handle opening and closing modal
+  const handleOpen = () => setOpenModal(true);
+  const handleClose = () => setOpenModal(false);
+  
   return (
     <div>
       <p className="text-2xl font-bold p-4">P2P</p>
@@ -60,11 +68,16 @@ export default function P2P() {
         </div>
       </div>
 
-      <div className="absolute bottom-20 right-2 md:right-[36%]">
-        <button className="bg-black rounded-full p-4 text-md md:text-xl font-bold px-6">
+      {/* Create Button to open Modal */}
+      <div className="absolute bottom-20 right-[36%]">
+        <button
+          onClick={handleOpen}
+          className="bg-black rounded-full p-4 text-xl font-bold px-6"
+        >
           Create
         </button>
       </div>
+      <ModalChallenge open={openModal} handleClose={handleClose} />
     </div>
   );
 }
