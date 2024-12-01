@@ -6,7 +6,7 @@ export default function P2P() {
       <p className="text-2xl font-bold p-4">P2P</p>
       <div className="flex justify-center">
         <button
-          className="text-center bg-[#282828] border-2 border-[#3E3E3E] w-80 h-full rounded-lg inline-flex items-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50  border-[--border] bg-[--background] text-[--muted-foreground] px-4 py-4 justify-start text-sm font-normal shadow-none"
+          className="text-center bg-[#282828] border-2 border-[#3E3E3E] w-full mx-5 h-full rounded-lg inline-flex items-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-[--background] text-[--muted-foreground] px-4 py-4 justify-start text-sm font-normal shadow-none"
           type="button"
         >
           <input
