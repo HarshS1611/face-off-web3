@@ -11,7 +11,7 @@ export default function P2P() {
   const handleClose = () => setOpenModal(false);
 
   return (
-    <div>
+    <div className="scroll-auto h-[74vh] overflow-y-auto scrollbar-hide">
       <p className="text-2xl font-bold p-4">P2P</p>
       <div className="flex justify-center">
         <div
@@ -48,6 +48,11 @@ export default function P2P() {
             My Challenges
           </div>
         </a>
+      </div>
+
+      <div className="flex flex-col gap-2 my-10 px-4">
+        <p className="text-2xl font-bold">Trending Now</p>
+        <ChallengeCard />
       </div>
 
       <div className="flex flex-col gap-2 my-10 px-4">
