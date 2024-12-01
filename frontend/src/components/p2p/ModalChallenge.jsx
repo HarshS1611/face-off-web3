@@ -5,8 +5,11 @@ import ArtImage from "../../assets/art.jpg";
 import AdvImage from "../../assets/adventure.jpg";
 import GameImg from "../../assets/gaming.jpg";
 import LifeImage from "../../assets/lifestyle.webp";
+import { generateCreateP2PChallengeTx, sendRawTransaction } from "../../blockchain/main";
 
 const ModalChallenge = ({ open, handleClose }) => {
+  const authToken = localStorage.getItem("authToken"); // Get auth token from localStorage
+  console.log(authToken, "nepali auth");
   const [page, setPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [formData, setFormData] = useState({
@@ -50,7 +53,13 @@ const ModalChallenge = ({ open, handleClose }) => {
     }
   };
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = async () => {
+    const createP2PChallengeTx = generateCreateP2PChallengeTx(
+      "0x51A41370827366087f7861d350781c790d937F16",
+      100000000000000
+    );
+
+    await sendRawTransaction(createP2PChallengeTx, authToken);
     console.log("Form Data:", formData);
   };
 

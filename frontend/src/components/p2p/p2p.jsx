@@ -1,7 +1,9 @@
 import { useState } from "react";
 import ModalChallenge from "./ModalChallenge";
 import ChallengeCard from "../challengecard";
-export default function P2P() {
+export default function P2P () {
+  const authToken = localStorage.getItem("authToken"); // Get auth token from localStorage
+  console.log(authToken, "nepali auth");
   const [status, setStatus] = useState("registration");
 
   const [openModal, setOpenModal] = useState(false);

@@ -40,6 +40,7 @@ export default function Profile () {
    try {
      const { data } = await axios.request(options);
      setPortfolioData(data.data);
+     console.log(data.data, "portfolio")
      setActiveSection("portfolio");
    } catch (error) {
      setError(`Failed to fetch portfolio: ${error.message}`);
@@ -99,7 +100,7 @@ export default function Profile () {
           Username:{userDetails?.email}
         </div>
         <div className="flex my-3 justify-center">
-          Token Balance: {portfolioData?.tokens?.quantity}
+          Token Balance: {portfolioData?.tokens[0]?.quantity}
         </div>
         <div className="flex gap-5 my-10 px-4">
           <a
