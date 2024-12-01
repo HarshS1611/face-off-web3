@@ -43,7 +43,7 @@ const Home = () => {
   const { color, progress } = getLevelDetails(totalTokens);
 
   return (
-    <div className="space-y-6 p-6 scroll-auto">
+    <div className="space-y-6 p-6 scroll-auto h-[80vh] overflow-y-auto scrollbar-hide">
       {/* Total Tokens Earned Component */}
       <div
         className={`p-6 rounded-lg ${color} text-white flex items-center space-x-6`}
