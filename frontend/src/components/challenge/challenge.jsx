@@ -1,7 +1,7 @@
 import { useState } from "react";
 export default function Challenge() {
   return (
-    <div>
+    <div className="scroll-auto h-[74vh] overflow-y-auto scrollbar-hide">
       <div className="flex flex-col gap-2 px-4">
         <div
           href={"/"}
