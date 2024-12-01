@@ -31,12 +31,12 @@ export default function P2P() {
         </div>
       </div>
 
-      <div className="flex gap-2 my-10 px-4">
+      <div className="flex gap-5 my-10 px-4">
         <a
           href={"/"}
           className="relative bg-[#282828] border-2 border-[#3E3E3E] w-full h-full   rounded-lg"
         >
-          <div className="flex w-full py-6 text-xl font-thunder tracking-widest font-bold text-white items-center justify-center gap-5">
+          <div className="flex w-full py-6 text-lg font-thunder tracking-widest font-bold text-white items-center justify-center gap-5">
             My Sidebets
           </div>
         </a>
@@ -44,7 +44,7 @@ export default function P2P() {
           href={"/"}
           className="relative bg-[#282828] border-2 border-[#3E3E3E] w-full h-full   rounded-lg"
         >
-          <div className="flex w-full py-6 text-xl font-thunder tracking-widest font-bold text-white items-center justify-center gap-5">
+          <div className="flex w-full py-6 text-lg font-thunder tracking-widest font-bold text-white items-center justify-center gap-5">
             My Challenges
           </div>
         </a>
