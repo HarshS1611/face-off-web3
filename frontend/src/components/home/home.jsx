@@ -11,7 +11,7 @@ const Home = () => {
     challengeProgress: 68,
   };
   // Example total tokens earned
-  const [totalTokens, setTotalTokens] = useState(1800);
+  const [totalTokens, setTotalTokens] = useState(800);
 
   // Determine the color and progress based on totalTokens
   const getLevelDetails = (tokens) => {
@@ -85,9 +85,45 @@ const Home = () => {
             Coming Soon
           </div>
         </div>
+
+        {/* Second row: Smartwatch on the left, text on the right */}
+        <div className="flex items-center space-x-6 mt-4 justify-center w-full">
+          <div className="flex-shrink-0">
+            <img
+              src={SmartwatchImage}
+              alt="Smartwatch"
+              className="w-24 h-24 object-cover rounded-lg"
+            />
+          </div>
+          <div className="flex-grow">
+            <h6 className="text-lg font-semibold">
+              Connect with a Smartwatch or any other wearable
+            </h6>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 mb-10">
+        <AnalyticsCard
+          title="Tokens Until Next Reward"
+          value={analytics.tokensLeft}
+          subtitle="Keep going!"
+          symbol="🎯"
+        />
+        <AnalyticsCard
+          title="Total Rewards Redeemed"
+          value={analytics.rewardsRedeemed}
+          subtitle="Great progress!"
+          symbol="🏆"
+        />
+        <AnalyticsCard
+          title="Challenges"
+          value={`${analytics.challengesCompleted} Complete`}
+          showProgress={true}
+          progressPercentage={analytics.challengeProgress}
+        />
       </div>
     </div>
   );
 };
-
 export default Home;
