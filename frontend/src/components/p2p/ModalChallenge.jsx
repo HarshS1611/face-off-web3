@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FitnessImage from "../../assets/fit.jpg";
 import TravelImage from "../../assets/travel.webp";
 import ArtImage from "../../assets/art.jpg";
 import AdvImage from "../../assets/adventure.jpg";
 import GameImg from "../../assets/gaming.jpg";
 import LifeImage from "../../assets/lifestyle.webp";
-import { generateCreateP2PChallengeTx, sendRawTransaction } from "../../blockchain/main";
+import {
+  generateCreateP2PChallengeTx,
+  getNextChallengeId,
+  sendRawTransaction,
+} from "../../blockchain/main";
+import axios from "axios";
 
 const ModalChallenge = ({ open, handleClose }) => {
   const authToken = localStorage.getItem("authToken"); // Get auth token from localStorage
   console.log(authToken, "nepali auth");
   const [page, setPage] = useState(1);
+  const [wallets, setWallets] = useState(null);
+  const [error, setError] = useState(null);
+  const [activeSection, setActiveSection] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [formData, setFormData] = useState({
     category: "",
@@ -21,7 +29,7 @@ const ModalChallenge = ({ open, handleClose }) => {
     challengeType: "",
     startDate: "",
     endDate: "",
-    wagerAmount: "",
+    wagerAmount: 100000000000000,
     wagerCurrency: "SOL",
   });
 
@@ -33,6 +41,23 @@ const ModalChallenge = ({ open, handleClose }) => {
     { name: "Lifestyle", image: LifeImage },
     { name: "Gaming", image: GameImg },
   ];
+
+  const fetchWallets = async () => {
+    const options = {
+      method: "GET",
+      url: "https://sandbox-api.okto.tech/api/v1/wallet",
+      headers: { Authorization: `Bearer ${authToken}` },
+    };
+
+    try {
+      const { data } = await axios.request(options);
+      console.log(data.data.wallets, "nepali wallets");
+      setWallets(data.data.wallets);
+      setActiveSection("wallets");
+    } catch (error) {
+      setError(`Failed to fetch wallets: ${error.message}`);
+    }
+  };
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -55,16 +80,23 @@ const ModalChallenge = ({ open, handleClose }) => {
 
   const handleFormSubmit = async () => {
     const createP2PChallengeTx = generateCreateP2PChallengeTx(
-      "0x51A41370827366087f7861d350781c790d937F16",
-      100000000000000
+      polygonWallet?.address,
+      formData.wagerAmount
     );
 
     await sendRawTransaction(createP2PChallengeTx, authToken);
-    console.log("Form Data:", formData);
+    // fetch ID
+    const id = await getNextChallengeId()
+    console.log("Your ID is:", id);
   };
-
+  useEffect(() => {
+    fetchWallets();
+  }, []);
   if (!open) return null;
 
+  const polygonWallet = wallets?.find(
+    (wallet) => wallet.network_name === "POLYGON_TESTNET_AMOY"
+  );
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 backdrop-blur-sm text-black">
       <div className="bg-white w-96 rounded-lg p-6 relative max-h-[80vh] overflow-y-auto scrollbar-hide">
@@ -251,9 +283,9 @@ const ModalChallenge = ({ open, handleClose }) => {
                   }
                   className="border border-gray-300 rounded-r-lg p-2"
                 >
-                  <option value="SOL">SOL</option>
+                  <option value="POL">POL</option>
+                  <option value="BASE">BASE</option>
                   <option value="USDC">USDC</option>
-                  <option value="BONK">BONK</option>
                 </select>
               </div>
             </div>
@@ -263,7 +295,7 @@ const ModalChallenge = ({ open, handleClose }) => {
                 Connected Wallet
               </label>
               <p className="border border-gray-300 rounded-lg p-2">
-                0x123...456 (Balance: 10 SOL)
+                {polygonWallet ? polygonWallet.address : " 0x123...456"}
               </p>
             </div>
 

@@ -172,6 +172,18 @@ export const generateJoinP2PChallengeTx = (from, challengeId, stake) => {
   };
 };
 
+export const getNextChallengeId = async () => {
+  try {
+    const nextChallengeId = await escrow.methods.nextChallengeId().call();
+    const nextChallengeIdInt = Number(nextChallengeId) - 1;
+    console.log("Next Challenge ID:", nextChallengeIdInt);
+    return nextChallengeIdInt;
+  } catch (error) {
+    console.error("Failed to get next challenge ID:", error);
+    throw error;
+  }
+};
+
 export const sendRawTransaction = async (rawTx, auth) => {
   const options = {
     method: "POST",
