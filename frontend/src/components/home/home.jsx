@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-// import BitcoinImage from "../../assets/bitcoin3.jpg";
-// import SmartwatchImage from "../../assets/smartwatch.jpg";
 import BitcoinImage from "../../assets/dollar.svg";
 import SmartwatchImage from "../../assets/smartw.svg";
 import AnalyticsCard from "../analyticscard";
@@ -13,7 +11,7 @@ const Home = () => {
     challengeProgress: 68,
   };
   // Example total tokens earned
-  const [totalTokens, setTotalTokens] = useState(200);
+  const [totalTokens, setTotalTokens] = useState(700);
 
   // Determine the color and progress based on totalTokens
   const getLevelDetails = (tokens) => {
@@ -21,32 +19,36 @@ const Home = () => {
       return {
         color: "bg-gradient-to-r from-yellow-700 to-amber-800",
         progress: (tokens / 500) * 100,
+        level: "BRONZE",
       };
     } else if (tokens < 1000) {
       return {
         color: "bg-gradient-to-r from-gray-500 to-gray-300",
         progress: ((tokens - 500) / 500) * 100,
+        level: "SILVER",
       };
     } else if (tokens < 1500) {
       return {
         color: "bg-gradient-to-r from-yellow-600 to-yellow-500",
         progress: ((tokens - 1000) / 500) * 100,
+        level: "GOLD",
       };
     } else {
       return {
         color: "bg-gradient-to-r from-purple-600 to-blue-700",
         progress: 100,
+        level: "PLATINUM",
       };
     }
   };
 
-  const { color, progress } = getLevelDetails(totalTokens);
+  const { color, progress, level } = getLevelDetails(totalTokens);
 
   return (
     <div className="space-y-6 p-6 scroll-auto h-[80vh] overflow-y-auto scrollbar-hide">
       {/* Total Tokens Earned Component */}
       <div
-        className={`p-6 rounded-lg ${color} text-white flex items-center space-x-6`}
+        className={`p-6 rounded-lg ${color} text-white flex items-center space-x-6 relative`}
       >
         <div className="flex-shrink-0">
           <img src={BitcoinImage} alt="Bitcoin" className="w-12 h-12" />
@@ -65,6 +67,13 @@ const Home = () => {
               {Math.round(progress)}% to next level
             </p>
           </div>
+        </div>
+
+        {/* Level Label */}
+        <div
+          className={`absolute top-4 right-4 px-4 py-2 rounded-md border-2 text-sm font-bold uppercase ${color} text-white`}
+        >
+          {level}
         </div>
       </div>
 
