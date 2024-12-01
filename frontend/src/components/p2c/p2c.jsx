@@ -1,9 +1,9 @@
 
 
-export default function Feed() {
+export default function P2C() {
     return (
         <div>
-            Feed
+            P2C
         </div>
     )
 }

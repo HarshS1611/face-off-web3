@@ -3,10 +3,12 @@ import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/navbar';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Explore from './components/home/explore';
-import Feed from './components/feed/feed';
+
 import Profile from './components/profile/profile';
 import Footer from './components/footer';
+import P2P from './components/p2p/p2p';
+import P2C from './components/p2c/p2c';
+import Home from './components/home/home';
 
 function App() {
   return (
@@ -15,8 +17,9 @@ function App() {
         <Navbar/>
         <Router>
           <Routes>
-            <Route path='/' element={<Explore/>}/>
-            <Route path='/feed' element={<Feed/>}/>
+            <Route path='/' element={<Home/>}/>
+            <Route path='/p2p' element={<P2P/>}/>
+            <Route path='/p2c' element={<P2C/>}/>
             <Route path='/profile' element={<Profile/>}/>
           </Routes>
         </Router>
