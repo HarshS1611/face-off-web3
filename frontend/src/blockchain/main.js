@@ -608,7 +608,7 @@ export const generateResolveP2CChallengeTx = (from, challengeId) => {
   const data = escrow.methods.resolveP2CChallenge(challengeId).encodeABI();
   return {
     from: from,
-    to: escrowAddress,
+    to: from,
     data: data,
   };
 };
