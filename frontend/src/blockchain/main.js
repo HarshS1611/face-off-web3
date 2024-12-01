@@ -598,7 +598,7 @@ export const getNextChallengeId = async () => {
 export const generateCreateP2CChallengeTx = (to) => {
   const data = escrow.methods.createP2CChallenge().encodeABI();
   return {
-    from: xfitAddress,
+    from: to,
     to: to,
     data: data,
   };
