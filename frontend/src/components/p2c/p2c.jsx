@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ChallengeCard from "../challengecard";
+import P2CChallengeCard from "../p2cchallengecard";
 export default function P2P() {
   const [status, setStatus] = useState("registration");
 
@@ -9,8 +9,8 @@ export default function P2P() {
 
       <div className="flex flex-col gap-2 my-10 px-4">
         <p className="text-2xl font-bold">All Challenges</p>
-        <ChallengeCard />
-        <ChallengeCard />
+        <P2CChallengeCard />
+        <P2CChallengeCard />
       </div>
     </div>
   );

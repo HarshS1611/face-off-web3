@@ -72,6 +72,9 @@ contract Escrow {
             winner: address(0)
         });
 
+        emit ChallengeCreated(nextChallengeId, msg.sender, 0.000000000000001 ether);
+        nextChallengeId++;
+
     }
 
     function resolveP2CChallenge(uint256 _challengeId) external {
