@@ -3,15 +3,17 @@ export default function ChallengeCard() {
   return (
     <div className="my-4">
       <div
-        href={"/"}
-        className="relative bg-[#282828] border-2 border-[#3E3E3E] w-full h-full rounded-lg px-5"
+        onClick={() => (window.location.href = "/challenge")}
+        className="relative cursor-pointer hover:bg-gray-900 bg-[#282828] border-2 border-[#3E3E3E] w-full h-full rounded-lg px-5"
       >
         <div>
           <div className="flex justify-center items-center">
             <h3 className="flex w-full pt-4 pb-2 text-xl font-thunder tracking-wide font-bold text-white">
               test activity
             </h3>
-            <p className="bg-[#E9C500] dm-mono-regular bg-opacity-40 text-xs mt-2 font-medium text-[#F0CA00] px-3 py-1 rounded-md">Upcoming</p>
+            <p className="bg-[#E9C500] dm-mono-regular bg-opacity-40 text-xs mt-2 font-medium text-[#F0CA00] px-3 py-1 rounded-md">
+              Upcoming
+            </p>
           </div>
           <p className="text-white text-sm py-1">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt,
