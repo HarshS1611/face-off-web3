@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ModalChallenge from "./ModalChallenge";
+import ChallengeCard from "../challengecard";
 export default function P2P() {
   const [status, setStatus] = useState("registration");
 
@@ -8,7 +9,7 @@ export default function P2P() {
   // Handle opening and closing modal
   const handleOpen = () => setOpenModal(true);
   const handleClose = () => setOpenModal(false);
-  
+
   return (
     <div>
       <p className="text-2xl font-bold p-4">P2P</p>
@@ -51,21 +52,7 @@ export default function P2P() {
 
       <div className="flex flex-col gap-2 my-10 px-4">
         <p className="text-2xl font-bold">Trending Now</p>
-        <div>
-          <div
-            href={"/"}
-            className="relative bg-[#282828] border-2 border-[#3E3E3E] w- h-full   rounded-lg"
-          >
-            <div>
-              <span className="m-4 bg-[#E9C500] dm-mono-regular bg-opacity-40 text-xs mt-2 font-medium text-[#F0CA00] px-3 py-1 rounded-md">
-                Ongoing
-              </span>
-              <div className="flex w-full py-6 text-xl font-thunder tracking-widest font-bold text-white items-center justify-center gap-5">
-                test activity
-              </div>
-            </div>
-          </div>
-        </div>
+        <ChallengeCard />
       </div>
 
       {/* Create Button to open Modal */}

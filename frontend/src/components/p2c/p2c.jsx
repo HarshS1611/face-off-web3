@@ -1,9 +1,17 @@
+import { useState } from "react";
+import ChallengeCard from "../challengecard";
+export default function P2P() {
+  const [status, setStatus] = useState("registration");
 
+  return (
+    <div>
+      <p className="text-2xl font-bold p-4">P2C</p>
 
-export default function P2C() {
-    return (
-        <div>
-            P2C
-        </div>
-    )
+      <div className="flex flex-col gap-2 my-10 px-4">
+        <p className="text-2xl font-bold">All Challenges</p>
+        <ChallengeCard />
+        <ChallengeCard />
+      </div>
+    </div>
+  );
 }
