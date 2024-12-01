@@ -1,7 +1,32 @@
 import { useState } from "react";
-export default function Challenge() {
+
+
+import { generateCreateP2CChallengeTx, generateResolveP2CChallengeTx, sendRawTransaction } from "../../blockchain/main";
+
+export default function P2CChallenge() {
+  const authToken = localStorage.getItem("authToken"); // Get auth token from localStorage
+  console.log(authToken, "nepali auth");
+  const handleJoin = async () => {
+    console.log("Joining the challenge");
+    const createP2CChallengeTx = generateCreateP2CChallengeTx(
+      "0x51A41370827366087f7861d350781c790d937F16"
+    );
+
+    await sendRawTransaction(createP2CChallengeTx, authToken);
+  };
+
+  const handleDone = async (event) => {
+    event.preventDefault();
+    const resolveP2CChallengeTx = generateResolveP2CChallengeTx(
+      "0x51A41370827366087f7861d350781c790d937F16",
+      0
+    );
+
+    await sendRawTransaction(resolveP2CChallengeTx, authToken);
+  };
+
   return (
-    <div className="scroll-auto h-[74vh] overflow-y-auto scrollbar-hide">
+    <div>
       <div className="flex flex-col gap-2 px-4">
         <div
           href={"/"}
@@ -36,7 +61,7 @@ export default function Challenge() {
             </div>
           </div>
         </div>
-        <button className="bg-white text-black rounded-full p-3 text-lg">
+        <button onClick={handleJoin} className="bg-white text-black rounded-full p-3 text-lg">
           Join Now
         </button>
       </div>

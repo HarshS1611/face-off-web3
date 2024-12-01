@@ -25,7 +25,7 @@ const ModalChallenge = ({ open, handleClose }) => {
     isInviteOnly: false,
     challengeName: "",
     target: "",
-    targetType: "calories",
+    targetType: "meters",
     challengeType: "",
     startDate: "",
     endDate: "",
@@ -208,8 +208,8 @@ const ModalChallenge = ({ open, handleClose }) => {
                   }
                   className="border border-gray-300 rounded-r-lg p-2"
                 >
-                  <option value="calories">Calories</option>
-                  <option value="steps">Steps</option>
+                  <option value="meters">Meters</option>
+                  <option value="kilometers">Kilometers</option>
                 </select>
               </div>
             </div>
