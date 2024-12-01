@@ -13,7 +13,7 @@ import Challenge from "./components/challenge/challenge";
 
 function App() {
   return (
-    <div className="flex w-full  bg-black  justify-center">
+    <div className="flex w-full bg-black h-screen justify-center">
       <div className="h-screen w-full bg-[#282828] text-white md:w-[550px] shadow-xl">
         <Navbar />
         <Router>
