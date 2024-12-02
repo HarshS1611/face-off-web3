@@ -39,7 +39,7 @@ export default function Challenge() {
 
     try {
       const { data } = await axios.request(options);
-      console.log(data.data.wallets, "nepali wallets");
+      // console.log(data.data.wallets, "nepali wallets");
       setWallets(data.data.wallets);
     } catch (error) {
       console.log(`Failed to fetch wallets: ${error.message}`);
@@ -111,8 +111,8 @@ export default function Challenge() {
 
     Promise.all([postActivity1, postActivity2])
       .then(([activity1Data, activity2Data]) => {
-        console.log("Activity 1:", activity1Data);
-        console.log("Activity 2:", activity2Data);
+        // console.log("Activity 1:", activity1Data);
+        // console.log("Activity 2:", activity2Data);
         setActivityIds({
           activity1Id: activity1Data._id,
           activity2Id: activity2Data._id,

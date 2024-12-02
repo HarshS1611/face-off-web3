@@ -56,7 +56,7 @@ export default function Profile () {
 
    try {
      const { data } = await axios.request(options);
-     console.log(data.data.wallets, "nepali wallets");
+    //  console.log(data.data.wallets, "nepali wallets");
      setWallets(data.data.wallets);
      setActiveSection("wallets");
    } catch (error) {
