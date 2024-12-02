@@ -46,7 +46,7 @@ export default function Challenge() {
     }
   };
   const polygonWallet = wallets?.find(
-    (wallet) => wallet.network_name === "POLYGON_TESTNET_AMOY"
+    (wallet) => wallet.network_name === "BASE"
   );
   useEffect(() => {
     fetchWallets();
