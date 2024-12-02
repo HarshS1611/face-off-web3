@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import ModalChallenge from "./ModalChallenge";
 import ChallengeCard from "../challengecard";
 import axios from "axios";
@@ -6,10 +7,12 @@ import axios from "axios";
 export default function P2P() {
   const authToken = localStorage.getItem("authToken"); // Get auth token from localStorage
   console.log(authToken, "nepali auth");
+  const navigate = useNavigate(); // For navigation
   const [status, setStatus] = useState("registration");
   const [openModal, setOpenModal] = useState(false);
   const [challenges, setChallenges] = useState([]); // State to store fetched challenges
   const [loading, setLoading] = useState(true); // Loading state
+  const [inviteCode, setInviteCode] = useState(""); // State to hold the input value
 
   // Handle opening and closing modal
   const handleOpen = () => setOpenModal(true);
@@ -35,6 +38,19 @@ export default function P2P() {
     fetchChallenges(); // Fetch challenges when the component mounts
   }, []);
 
+  // Handle Join Button
+  const handleJoin = () => {
+    const foundChallenge = challenges.find(
+      (challenge) => challenge.id === inviteCode
+    );
+
+    if (foundChallenge) {
+      navigate(`/challenge/${foundChallenge._id}`); // Navigate to the challenge page
+    } else {
+      alert("Challenge not found! Please check your invite code.");
+    }
+  };
+
   return (
     <div className="scroll-auto h-[74vh] overflow-y-auto scrollbar-hide">
       <p className="text-2xl font-bold p-4">P2P</p>
@@ -47,10 +63,15 @@ export default function P2P() {
         >
           <input
             placeholder="Enter Invite Code"
+            value={inviteCode}
+            onChange={(e) => setInviteCode(e.target.value)} // Bind state to input
             className="text-white outline-none w-full bg-transparent"
           ></input>
           <div className="flex w-full justify-end">
-            <button className="text-black bg-white  rounded-full px-4  p-1 text-xs">
+            <button
+              onClick={handleJoin} // Attach the handler
+              className="text-black bg-white rounded-full px-4 p-1 text-xs"
+            >
               Join
             </button>
           </div>
