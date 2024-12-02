@@ -29,8 +29,8 @@ const ModalChallenge = ({ open, handleClose }) => {
     challengeType: "",
     startDate: "24/11/2024",
     endDate: "02/12/2024",
-    wagerAmount: 0.0001,
-    wagerCurrency: "POL",
+    wagerAmount: 0.00001,
+    wagerCurrency: "ETH",
   });
 
   const categories = [

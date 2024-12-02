@@ -557,10 +557,10 @@ const xfitAbi =  [
   }
 ];
 
-const escrowAddress = "0xd3Ec5f72711FF370093f029511CA0beeAcE888f4";
+const escrowAddress = "0x6E368210Fb3B01D0084Fa93e4e11E062c4bbFebf";
 const escrow = new web3.eth.Contract(escrowAbi, escrowAddress);
 
-const xfitAddress = "0x184c5a0f24f68059dd33f770928c7fc73c789664";
+const xfitAddress = "0x692B876987b4D62F65bc57366287B2c4e9657a2F";
 const xfit = new web3.eth.Contract(xfitAbi, xfitAddress);
 
 export const generateCreateP2PChallengeTx = (from, value) => {
@@ -624,7 +624,7 @@ export const generateResolveP2CChallengeTx = (from, challengeId) => {
   };
 };
 export const generateApproveTx = (from) => {
-  const amount = `0x${(parseFloat(0.0001) * 1e18).toString(16)}`;
+  const amount = `0x${(parseFloat(0.00001) * 1e18).toString(16)}`;
   const data = xfit.methods.approveCustom(xfitAddress,escrowAddress, amount).encodeABI();
   return {
     from: from,

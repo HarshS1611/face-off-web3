@@ -17,11 +17,15 @@ module.exports = {
       url: `https://polygon-amoy.g.alchemy.com/v2/grz0ZmJGLvmh--ZEfeBdhgK2SEEigRg_`,
       accounts: [deployerPrivateKey],
     },
+    base: {
+      url: "https://base-mainnet.g.alchemy.com/v2/grz0ZmJGLvmh--ZEfeBdhgK2SEEigRg_",
+      accounts: [deployerPrivateKey],
+    },
   },
 
   etherscan: {
     apiKey: {
-      polygonAmoy: `${etherscanApiKey}`,
+      base: `${etherscanApiKey}`,
     }
   },
   verify: {
