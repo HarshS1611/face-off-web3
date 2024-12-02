@@ -14,7 +14,7 @@ import Home from "./components/home/home";
 import Challenge from "./components/challenge/challenge";
 import LoginPage from "./components/login/login";
 import P2CChallenge from "./components/challenge/p2cChallenge";
-const OKTO_CLIENT_API_KEY = "c2829df9-bddb-4387-a6a4-ab30fc87c35f";
+const OKTO_CLIENT_API_KEY = "19b94bbc-afd1-45c7-98d1-08fe9eed550f";
 
 function App() {
   const [authToken, setAuthToken] = useState(null);
@@ -48,7 +48,8 @@ function App() {
                 path="/profile"
                 element={<Profile />}
               />
-              <Route path="/challenge" element={<Challenge />} />
+              {/* <Route path="/challenge" element={<Challenge />} /> */}
+              <Route path="/challenge/:id" element={<Challenge />} />
               <Route path="/p2cchallenge" element={<P2CChallenge />} />
             </Routes>
           </OktoProvider>

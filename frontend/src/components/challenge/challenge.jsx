@@ -1,11 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export default function Challenge() {
+
+  const { id } = useParams(); // Get the dynamic id from the URL
+  console.log("Challenge ID:", id); // Log the id to the console
+
+  
+
   const [hasJoined, setHasJoined] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [activityIds, setActivityIds] = useState({});
   const [distances, setDistances] = useState({ activity1: 0, activity2: 0 });
   const [pollInterval, setPollInterval] = useState(null); // To store the poll interval ID
+
+  const [challengeData , setChallengeData] = useState({
+    amount: 0,
+    category: "",
+    challengeName: "",
+    target: "",
+    targetType: ""
+  });
+
+
+  useEffect(() => {
+    // Fetch challenge data from the API based on the ID
+    fetch(`http://localhost:3001/challenges/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Challenge Data:", data); // Log the response
+        setChallengeData({
+          amount: data.amount,
+          category: data.category,
+          challengeName: data.challengeName,
+          target: data.target,
+          targetType: data.targetType
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching challenge data:", error);
+      });
+  }, []); // The effect will run when the `id` changes
+
+  useEffect(() => {
+    console.log("Updated Challenge Data:", challengeData);
+  }, [challengeData]);
 
   const handleJoinChallenge = () => {
     setIsActive(true);
@@ -141,26 +180,25 @@ if (activity1Update.endDistance >= 30) {
             alt="running"
             className="w-full h-52 object-cover"
           />
-          <p className="text-xl font-bold my-1 mx-5">5km run</p>
-          <p className="text-sm font-medium my-1 mx-5">from 2 Dec</p>
+          <p className="text-xl font-bold my-1 mx-5">{challengeData.challengeName}</p>
+          {/* <p className="text-sm font-medium my-1 mx-5">from 2 Dec</p> */}
           <div>
             <p className="p-6 text-lg font-bold text-white">
               About the challenge
             </p>
             <p className="px-6 text-base font-normal text-white">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
-              tincidunt, nisl non pellentesque tincidunt, nunc turpis ultrices
-              dolor, ac dictum odio tortor id sapien. Donec nec nunc
-            </p>
+  This challenge is a <span className="font-semibold">{challengeData.category}</span> challenge, where participants compete to achieve the specified goal. The challenge is designed to test your endurance, skill, and commitment. Take on the challenge to push your limits and earn rewards based on your performance!
+</p>
+
           </div>
           <div className="flex justify-between px-2">
             <div className="flex flex-col gap-2 my-10 px-4">
-              <p className="text-lg font-bold">Created by:</p>
-              <p className="text-sm font-medium">John Doe</p>
+              <p className="text-lg font-bold">Target:</p>
+              <p className="text-sm font-medium">{challengeData.target} {challengeData.targetType}</p>
             </div>
             <div className="flex flex-col gap-2 my-10 px-4">
               <p className="text-lg font-bold">Reward:</p>
-              <p className="text-sm font-medium">0.0005ETH</p>
+              <p className="text-sm font-medium">{challengeData.amount*2}</p>
             </div>
           </div>
         </div>

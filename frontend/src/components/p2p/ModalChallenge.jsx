@@ -78,17 +78,65 @@ const ModalChallenge = ({ open, handleClose }) => {
     }
   };
 
-  const handleFormSubmit = async () => {
-    const createP2PChallengeTx = generateCreateP2PChallengeTx(
-      polygonWallet?.address,
-      formData.wagerAmount
-    );
+  // const handleFormSubmit = async () => {
+  //   const createP2PChallengeTx = generateCreateP2PChallengeTx(
+  //     polygonWallet?.address,
+  //     formData.wagerAmount
+  //   );
 
-    await sendRawTransaction(createP2PChallengeTx, authToken);
-    // fetch ID
-    const id = await getNextChallengeId()
-    console.log("Your ID is:", id);
+  //   await sendRawTransaction(createP2PChallengeTx, authToken);
+  //   // fetch ID
+  //   const id = await getNextChallengeId()
+  //   console.log("Your ID is:", id);
+  //   console.log(formData);
+  //   if(id){
+
+  //   }
+
+  // };
+
+  const handleFormSubmit = async () => {
+    try {
+      const createP2PChallengeTx = generateCreateP2PChallengeTx(
+        polygonWallet?.address,
+        formData.wagerAmount
+      );
+  
+      // Send the raw transaction to the blockchain
+      await sendRawTransaction(createP2PChallengeTx, authToken);
+  
+      // Fetch the next challenge ID from the blockchain
+      const id = await getNextChallengeId();
+      console.log("Your ID is:", id);
+      console.log(formData);
+  
+      // If the ID is successfully retrieved, make the POST request
+      if (id!==-2) {
+        const challengeData = {
+          category: formData.category,
+          challengeName: formData.challengeName,
+          target: formData.target,
+          targetType: formData.targetType,
+          id: 6, // Use the generated ID
+          amount: formData.wagerAmount,
+        };
+  
+        // Make the POST request to your backend API
+        const response = await axios.post("http://localhost:3001/challenges", challengeData);
+        // console.log(response.data._id);
+        // localStorage.setItem("id", response.data._id);
+  
+        // Log the response from the API
+        console.log("Challenge created successfully:", response.data);
+      } else {
+        console.error("Failed to retrieve challenge ID.");
+      }
+    } catch (error) {
+      console.error("Error submitting the challenge:", error);
+    }
   };
+
+  
   useEffect(() => {
     fetchWallets();
   }, []);
