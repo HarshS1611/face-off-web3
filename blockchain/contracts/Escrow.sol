@@ -90,14 +90,13 @@ contract Escrow {
         challenges[nextChallengeId] = Challenge({
             creator: address(platformToken),
             participant: msg.sender,
-            stake: 0.00001 ether,
+            stake: 0.0001 ether,
             completed: false,
             winner: address(0)
         });
         nextChallengeId++;
 
         emit ChallengeCreated(nextChallengeId, msg.sender, 0.0001 ether);
-        emit ChallengeCreated(nextChallengeId, msg.sender, 0.00001 ether);
     }
 
     function resolveP2CChallenge(uint256 _challengeId) external {
