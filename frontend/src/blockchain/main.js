@@ -568,13 +568,13 @@ const escrow = new web3.eth.Contract(escrowAbi, escrowAddress);
 const xfitAddress = "0x184c5a0f24f68059dd33f770928c7fc73c789664";
 const xfit = new web3.eth.Contract(xfitAbi, xfitAddress);
 
-export const generateCreateP2PChallengeTx = (from) => {
+export const generateCreateP2PChallengeTx = (from, value) => {
   const data = escrow.methods.createP2PChallenge().encodeABI();
   console.log(data, "data");
   return {
     from: from,
     to: escrowAddress,
-    value: `0x${(parseFloat(0.0001) * 1e18).toString(16)}`,
+    value: `0x${(parseFloat(value) * 1e18).toString(16)}`,
     data: data,
   };
 };
@@ -584,11 +584,19 @@ export const generateJoinP2PChallengeTx = (from, challengeId, stake) => {
   return {
     from: from,
     to: escrowAddress,
-    value: web3.utils.toWei(stake.toString(), "ether"),
-    gas: 500000,
+    value: `0x${(parseFloat(stake) * 1e18).toString(16)}`,
     data: data,
   };
 };
+
+export const resolveP2PChallenge = (from, Id, winner) => {
+  const data = escrow.methods.resolveP2PChallenge(Id, winner).encodeABI();
+  return {
+    from: from,
+    to: escrowAddress,
+    data: data,
+  };
+}
 
 export const getNextChallengeId = async () => {
   try {

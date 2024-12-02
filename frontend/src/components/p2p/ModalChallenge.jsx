@@ -29,7 +29,7 @@ const ModalChallenge = ({ open, handleClose }) => {
     challengeType: "",
     startDate: "",
     endDate: "",
-    wagerAmount: 100000000000000,
+    wagerAmount: 0.0001,
     wagerCurrency: "SOL",
   });
 
@@ -99,6 +99,7 @@ const ModalChallenge = ({ open, handleClose }) => {
     try {
       const createP2PChallengeTx = generateCreateP2PChallengeTx(
         polygonWallet?.address,
+        formData.wagerAmount
       );
   
       // Send the raw transaction to the blockchain

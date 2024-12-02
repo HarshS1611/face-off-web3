@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { generateJoinP2PChallengeTx, resolveP2PChallenge } from "../../blockchain/main";
+import axios from "axios";
 
 export default function Challenge() {
 
   const { id } = useParams(); // Get the dynamic id from the URL
   console.log("Challenge ID:", id); // Log the id to the console
 
+   const authToken = localStorage.getItem("authToken"); // Get auth token from localStorage
+  console.log(authToken, "nepali auth");
   
+  const [wallets, setWallets] = useState(null);
 
   const [hasJoined, setHasJoined] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -21,9 +26,26 @@ export default function Challenge() {
     target: "",
     targetType: ""
   });
+  const fetchWallets = async () => {
+    const options = {
+      method: "GET",
+      url: "https://sandbox-api.okto.tech/api/v1/wallet",
+      headers: { Authorization: `Bearer ${authToken}` },
+    };
 
-
+    try {
+      const { data } = await axios.request(options);
+      console.log(data.data.wallets, "nepali wallets");
+      setWallets(data.data.wallets);
+    } catch (error) {
+      console.log(`Failed to fetch wallets: ${error.message}`);
+    }
+  };
+  const polygonWallet = wallets?.find(
+    (wallet) => wallet.network_name === "POLYGON_TESTNET_AMOY"
+  );
   useEffect(() => {
+    fetchWallets();
     // Fetch challenge data from the API based on the ID
     fetch(`http://localhost:3001/challenges/${id}`)
       .then((response) => response.json())
@@ -46,7 +68,8 @@ export default function Challenge() {
     console.log("Updated Challenge Data:", challengeData);
   }, [challengeData]);
 
-  const handleJoinChallenge = () => {
+  const handleJoinChallenge = async () => {
+    await generateJoinP2PChallengeTx(polygonWallet.address, id, challengeData.amount);
     setIsActive(true);
     const postActivity1 = fetch(
       "http://localhost:3001/activities1",
@@ -144,7 +167,8 @@ export default function Challenge() {
 if (activity1Update.endDistance >= 30) {
             console.log("Activity 1 Wins!");
             clearInterval(pollIntervalId); // Stop polling
-            setPollInterval(null); // Clear polling state
+  setPollInterval(null); // Clear polling state
+   resolveP2PChallenge(polygonWallet.address, id, polygonWallet.address)
             alert("Athlete 1 Wins!"); // Alert when Athlete 1 wins
           } else if (activity2Update.endDistance >= 30) {
             console.log("Activity 2 Wins!");
