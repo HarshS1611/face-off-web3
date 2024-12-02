@@ -117,7 +117,7 @@ const ModalChallenge = ({ open, handleClose }) => {
           challengeName: formData.challengeName,
           target: formData.target,
           targetType: formData.targetType,
-          id: 11, // Use the generated ID
+          id: 12, // Use the generated ID
           amount: formData.wagerAmount,
         };
   

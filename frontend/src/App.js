@@ -50,7 +50,8 @@ function App() {
               />
               {/* <Route path="/challenge" element={<Challenge />} /> */}
               <Route path="/challenge/:id" element={<Challenge />} />
-              <Route path="/p2cchallenge" element={<P2CChallenge />} />
+              <Route path="/p2c/:id" element={<P2CChallenge />} />
+              {/* <Route path="/p2cchallenge" element={<P2CChallenge />} /> */}
             </Routes>
           </OktoProvider>
         </Router>
