@@ -575,7 +575,7 @@ export const generateCreateP2PChallengeTx = (from, value) => {
 };
 
 export const generateJoinP2PChallengeTx = (from, challengeId, stake) => {
-  console.log("nepal join p2p", from, challengeId, stake)
+  // console.log("nepal join p2p", from, challengeId, stake)
   const data = escrow.methods.joinP2PChallenge(challengeId).encodeABI();
   return {
     from: from,
