@@ -171,14 +171,14 @@ if (activity1Update.endDistance >= 30) {
             console.log("Activity 1 Wins!");
             clearInterval(pollIntervalId); // Stop polling
   setPollInterval(null); // Clear polling state
-   const rawTxn = await  resolveP2PChallenge(polygonWallet.address, challengeData.idd, polygonWallet.address)
+   const rawTxn = await  resolveP2PChallenge(polygonWallet.address, challengeData.idd)
    await sendRawTransaction(rawTxn, authToken)
             alert("Athlete 1 Wins!"); // Alert when Athlete 1 wins
           } else if (activity2Update.endDistance >= 30) {
             console.log("Activity 2 Wins!");
             clearInterval(pollIntervalId); // Stop polling
             setPollInterval(null); // Clear polling state
-            const rawTxn = await resolveP2PChallenge(polygonWallet.address, challengeData.idd, polygonWallet.address)
+            const rawTxn = await resolveP2PChallenge(polygonWallet.address, challengeData.idd)
             await sendRawTransaction(rawTxn, authToken)
             alert("Athlete 2 Wins!"); // Alert when Athlete 2 wins
           }

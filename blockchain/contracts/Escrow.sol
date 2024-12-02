@@ -67,23 +67,20 @@ contract Escrow {
         emit ChallengeJoined(_challengeId, msg.sender);
     }
 
-    function resolveP2PChallenge(uint256 _challengeId, address _winner)
+    function resolveP2PChallenge(uint256 _challengeId)
         external
     {
         emit ChallengeInitiated(msg.sender);
 
         Challenge storage challenge = challenges[_challengeId];
         require(!challenge.completed, "Challenge already resolved");
-        require(
-            _winner == challenge.creator || _winner == challenge.participant,
-            "Invalid winner"
-        );
+        
 
         challenge.completed = true;
-        challenge.winner = _winner;
-        payable(_winner).transfer(challenge.stake * 2);
+        challenge.winner = msg.sender;
+        payable(msg.sender).transfer(challenge.stake * 2);
 
-        emit ChallengeResolved(_challengeId, _winner);
+        emit ChallengeResolved(_challengeId, msg.sender);
     }
 
     // P2C Challenge

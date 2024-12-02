@@ -203,11 +203,6 @@ const escrowAbi = [
     "internalType": "uint256",
     "name": "_challengeId",
     "type": "uint256"
-    },
-    {
-    "internalType": "address",
-    "name": "_winner",
-    "type": "address"
     }
   ],
   "name": "resolveP2PChallenge",
@@ -562,7 +557,7 @@ const xfitAbi =  [
   }
 ];
 
-const escrowAddress = "0x1EE9FD5093d5AE720a29071D3Ec7747bBd2Db47C";
+const escrowAddress = "0xd3Ec5f72711FF370093f029511CA0beeAcE888f4";
 const escrow = new web3.eth.Contract(escrowAbi, escrowAddress);
 
 const xfitAddress = "0x184c5a0f24f68059dd33f770928c7fc73c789664";
@@ -590,12 +585,12 @@ export const generateJoinP2PChallengeTx = (from, challengeId, stake) => {
   };
 };
 
-export const resolveP2PChallenge = (from, Id, winner) => {
+export const resolveP2PChallenge = (from, Id) => {
   const id = Number(Id)
-  const data = escrow.methods.resolveP2PChallenge(id, winner).encodeABI();
+  const data = escrow.methods.resolveP2PChallenge(id).encodeABI();
   return {
     from: from,
-    to: from,
+    to: escrowAddress,
     data: data,
   };
 }
