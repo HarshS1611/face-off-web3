@@ -147,7 +147,7 @@ const ModalChallenge = ({ open, handleClose }) => {
   if (!open) return null;
 
   const polygonWallet = wallets?.find(
-    (wallet) => wallet.network_name === "POLYGON_TESTNET_AMOY"
+    (wallet) => wallet.network_name === "BASE"
   );
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 backdrop-blur-sm text-black">

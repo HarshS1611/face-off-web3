@@ -1,7 +1,7 @@
 import { Web3 } from "web3";
 import axios from "axios";
 
-const web3 = new Web3("https://rpc-amoy.polygon.technology/"); // Replace with your RPC URL
+const web3 = new Web3("https://mainnet.base.org"); // Replace with your RPC URL
 
 // Load the escrow ABI from the JSON file
 const escrowAbi = [
@@ -642,7 +642,7 @@ export const sendRawTransaction = async (rawTx, auth) => {
       "Content-Type": "application/json",
     },
     data: {
-      network_name: "POLYGON_TESTNET_AMOY",
+      network_name: "BASE",
       transaction: rawTx,
     },
   };
