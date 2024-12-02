@@ -78,18 +78,11 @@ const ModalChallenge = ({ open, handleClose }) => {
     }
   };
 
-<<<<<<< Updated upstream
   // const handleFormSubmit = async () => {
   //   const createP2PChallengeTx = generateCreateP2PChallengeTx(
   //     polygonWallet?.address,
   //     formData.wagerAmount
   //   );
-=======
-  const handleFormSubmit = async () => {
-    const createP2PChallengeTx = generateCreateP2PChallengeTx(
-      polygonWallet?.address,
-    );
->>>>>>> Stashed changes
 
   //   await sendRawTransaction(createP2PChallengeTx, authToken);
   //   // fetch ID
@@ -106,7 +99,6 @@ const ModalChallenge = ({ open, handleClose }) => {
     try {
       const createP2PChallengeTx = generateCreateP2PChallengeTx(
         polygonWallet?.address,
-        formData.wagerAmount
       );
   
       // Send the raw transaction to the blockchain
