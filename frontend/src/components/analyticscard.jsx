@@ -44,7 +44,7 @@ const AnalyticsCard = ({
   progressPercentage,
 }) => {
   return (
-    <div className="bg-gray-800 rounded-xl p-3">
+    <div className="bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl p-3">
       <div className="flex flex-col items-center justify-between h-full py-2">
         <div className="flex flex-col items-center text-center">
           <h3 className="text-gray-300 text-base">{title}</h3>
