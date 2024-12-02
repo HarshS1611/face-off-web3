@@ -45,6 +45,19 @@ const escrowAbi = [
   "anonymous": false,
   "inputs": [
     {
+    "indexed": false,
+    "internalType": "address",
+    "name": "creator",
+    "type": "address"
+    }
+  ],
+  "name": "ChallengeInitiated",
+  "type": "event"
+  },
+  {
+  "anonymous": false,
+  "inputs": [
+    {
     "indexed": true,
     "internalType": "uint256",
     "name": "challengeId",
@@ -126,13 +139,7 @@ const escrowAbi = [
   "type": "function"
   },
   {
-  "inputs": [
-    {
-    "internalType": "uint256",
-    "name": "_stake",
-    "type": "uint256"
-    }
-  ],
+  "inputs": [],
   "name": "createP2PChallenge",
   "outputs": [],
   "stateMutability": "payable",
@@ -555,20 +562,19 @@ const xfitAbi =  [
   }
 ];
 
-const escrowAddress = "0xad5f562519641c7e35f81411aa531aa71179e2b9";
+const escrowAddress = "0x1EE9FD5093d5AE720a29071D3Ec7747bBd2Db47C";
 const escrow = new web3.eth.Contract(escrowAbi, escrowAddress);
 
 const xfitAddress = "0x184c5a0f24f68059dd33f770928c7fc73c789664";
 const xfit = new web3.eth.Contract(xfitAbi, xfitAddress);
 
-export const generateCreateP2PChallengeTx = (from, stake) => {
-  console.log(stake, "stakenormal");
-  const data = escrow.methods.createP2PChallenge(stake).encodeABI();
+export const generateCreateP2PChallengeTx = (from) => {
+  const data = escrow.methods.createP2PChallenge().encodeABI();
   console.log(data, "data");
   return {
     from: from,
     to: escrowAddress,
-    value: `0x${web3.utils.toWei("0.0001", "ether")}`,
+    value: `0x${(parseFloat(0.0001) * 1e18).toString(16)}`,
     data: data,
   };
 };
@@ -599,7 +605,7 @@ export const generateCreateP2CChallengeTx = (to) => {
   const data = escrow.methods.createP2CChallenge().encodeABI();
   return {
     from: to,
-    to: to,
+    to: escrowAddress,
     data: data,
   };
 };
