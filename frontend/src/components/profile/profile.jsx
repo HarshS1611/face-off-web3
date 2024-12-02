@@ -7,7 +7,7 @@ import { useOkto } from "okto-sdk-react";
 
 export default function Profile () {
   const authToken = localStorage.getItem("authToken"); // Get auth token from localStorage
-  console.log(authToken, "nepali auth");
+  // console.log(authToken, "nepali auth");
 
   const [userDetails, setUserDetails] = useState(null);
   const [portfolioData, setPortfolioData] = useState(null);

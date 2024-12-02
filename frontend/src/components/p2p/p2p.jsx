@@ -6,7 +6,7 @@ import axios from "axios";
 
 export default function P2P() {
   const authToken = localStorage.getItem("authToken"); // Get auth token from localStorage
-  console.log(authToken, "nepali auth");
+  // console.log(authToken, "nepali auth");
   const navigate = useNavigate(); // For navigation
   const [status, setStatus] = useState("registration");
   const [openModal, setOpenModal] = useState(false);

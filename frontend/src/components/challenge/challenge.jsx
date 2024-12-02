@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { generateJoinP2PChallengeTx, resolveP2PChallenge } from "../../blockchain/main";
+import { generateJoinP2PChallengeTx, resolveP2PChallenge, sendRawTransaction } from "../../blockchain/main";
 import axios from "axios";
 
 export default function Challenge() {
@@ -9,7 +9,7 @@ export default function Challenge() {
   console.log("Challenge ID:", id); // Log the id to the console
 
    const authToken = localStorage.getItem("authToken"); // Get auth token from localStorage
-  console.log(authToken, "nepali auth");
+  // console.log(authToken, "nepali auth");
   
   const [wallets, setWallets] = useState(null);
 
@@ -24,7 +24,8 @@ export default function Challenge() {
     category: "",
     challengeName: "",
     target: "",
-    targetType: ""
+    targetType: "",
+    idd:"",
   });
   const fetchWallets = async () => {
     const options = {
@@ -56,7 +57,8 @@ export default function Challenge() {
           category: data.category,
           challengeName: data.challengeName,
           target: data.target,
-          targetType: data.targetType
+          targetType: data.targetType,
+          idd: data.id
         });
       })
       .catch((error) => {
@@ -69,7 +71,8 @@ export default function Challenge() {
   }, [challengeData]);
 
   const handleJoinChallenge = async () => {
-    await generateJoinP2PChallengeTx(polygonWallet.address, id, challengeData.amount);
+    const generateTxn  = await generateJoinP2PChallengeTx(polygonWallet.address, challengeData.idd, challengeData.amount);
+    await sendRawTransaction(generateTxn, authToken)
     setIsActive(true);
     const postActivity1 = fetch(
       "http://localhost:3001/activities1",
@@ -122,7 +125,7 @@ export default function Challenge() {
   };
 
   const startPolling = (activity1Id, activity2Id) => {
-    const pollIntervalId = setInterval(() => {
+    const pollIntervalId = setInterval(async() => {
       const randomNum1 = Math.floor(Math.random() * 5) + 1;
       const randomNum2 = Math.floor(Math.random() * 5) + 1;
 
@@ -160,7 +163,7 @@ export default function Challenge() {
             ).then((response) => response.json());
           }),
       ])
-        .then(([activity1Update, activity2Update]) => {
+        .then(async([activity1Update, activity2Update]) => {
           console.log("Updated Activity 1:", activity1Update);
           console.log("Updated Activity 2:", activity2Update);
 
@@ -168,12 +171,15 @@ if (activity1Update.endDistance >= 30) {
             console.log("Activity 1 Wins!");
             clearInterval(pollIntervalId); // Stop polling
   setPollInterval(null); // Clear polling state
-   resolveP2PChallenge(polygonWallet.address, id, polygonWallet.address)
+   const rawTxn = await  resolveP2PChallenge(polygonWallet.address, challengeData.idd, polygonWallet.address)
+   await sendRawTransaction(rawTxn, authToken)
             alert("Athlete 1 Wins!"); // Alert when Athlete 1 wins
           } else if (activity2Update.endDistance >= 30) {
             console.log("Activity 2 Wins!");
             clearInterval(pollIntervalId); // Stop polling
             setPollInterval(null); // Clear polling state
+            const rawTxn = await resolveP2PChallenge(polygonWallet.address, challengeData.idd, polygonWallet.address)
+            await sendRawTransaction(rawTxn, authToken)
             alert("Athlete 2 Wins!"); // Alert when Athlete 2 wins
           }
         })

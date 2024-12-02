@@ -580,6 +580,7 @@ export const generateCreateP2PChallengeTx = (from, value) => {
 };
 
 export const generateJoinP2PChallengeTx = (from, challengeId, stake) => {
+  console.log("nepal join p2p", from, challengeId, stake)
   const data = escrow.methods.joinP2PChallenge(challengeId).encodeABI();
   return {
     from: from,
@@ -590,10 +591,11 @@ export const generateJoinP2PChallengeTx = (from, challengeId, stake) => {
 };
 
 export const resolveP2PChallenge = (from, Id, winner) => {
-  const data = escrow.methods.resolveP2PChallenge(Id, winner).encodeABI();
+  const id = Number(Id)
+  const data = escrow.methods.resolveP2PChallenge(id, winner).encodeABI();
   return {
     from: from,
-    to: escrowAddress,
+    to: from,
     data: data,
   };
 }
@@ -601,7 +603,7 @@ export const resolveP2PChallenge = (from, Id, winner) => {
 export const getNextChallengeId = async () => {
   try {
     const nextChallengeId = await escrow.methods.nextChallengeId().call();
-    const nextChallengeIdInt = Number(nextChallengeId) - 1;
+    const nextChallengeIdInt = Number(nextChallengeId);
     console.log("Next Challenge ID:", nextChallengeIdInt);
     return nextChallengeIdInt;
   } catch (error) {

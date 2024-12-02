@@ -14,7 +14,7 @@ import axios from "axios";
 
 const ModalChallenge = ({ open, handleClose }) => {
   const authToken = localStorage.getItem("authToken"); // Get auth token from localStorage
-  console.log(authToken, "nepali auth");
+  // console.log(authToken, "nepali auth");
   const [page, setPage] = useState(1);
   const [wallets, setWallets] = useState(null);
   const [error, setError] = useState(null);
@@ -30,7 +30,7 @@ const ModalChallenge = ({ open, handleClose }) => {
     startDate: "",
     endDate: "",
     wagerAmount: 0.0001,
-    wagerCurrency: "SOL",
+    wagerCurrency: "POL",
   });
 
   const categories = [
@@ -111,14 +111,15 @@ const ModalChallenge = ({ open, handleClose }) => {
       console.log(formData);
   
       // If the ID is successfully retrieved, make the POST request
-      if (id!==-2) {
+      if (id) {
         const challengeData = {
           category: formData.category,
           challengeName: formData.challengeName,
           target: formData.target,
           targetType: formData.targetType,
-          id: 12, // Use the generated ID
+          id: id, // Use the generated ID
           amount: formData.wagerAmount,
+          wagerCurrency: formData.wagerCurrency,
         };
   
         // Make the POST request to your backend API

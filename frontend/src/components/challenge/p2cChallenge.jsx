@@ -10,7 +10,7 @@ export default function P2CChallenge() {
   console.log("Challenge ID:", id); // Log the id to the console
 
   const authToken = localStorage.getItem("authToken"); // Get auth token from localStorage
-  console.log(authToken, "nepali auth");
+  // console.log(authToken, "nepali auth");
 
   const [challengeData, setChallengeData] = useState({
     amount: 0,
