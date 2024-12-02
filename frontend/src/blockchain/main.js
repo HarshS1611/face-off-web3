@@ -622,10 +622,19 @@ export const generateResolveP2CChallengeTx = (from, challengeId) => {
   const data = escrow.methods.resolveP2CChallenge(challengeId).encodeABI();
   return {
     from: from,
-    to: from,
+    to: escrowAddress,
     data: data,
   };
 };
+export const generateApproveTx = (from) => {
+  const amount = `0x${(parseFloat(0.0001) * 1e18).toString(16)}`;
+  const data = xfit.methods.approveCustom(xfitAddress,escrowAddress, amount).encodeABI();
+  return {
+    from: from,
+    to: xfitAddress,
+    data: data,
+  };
+}
 
 export const sendRawTransaction = async (rawTx, auth) => {
   const options = {

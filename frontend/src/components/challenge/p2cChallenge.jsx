@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 
-import { generateCreateP2CChallengeTx, generateResolveP2CChallengeTx, sendRawTransaction } from "../../blockchain/main";
+import { generateApproveTx, generateCreateP2CChallengeTx, generateResolveP2CChallengeTx, sendRawTransaction } from "../../blockchain/main";
 
 export default function P2CChallenge() {
   const authToken = localStorage.getItem("authToken"); // Get auth token from localStorage
@@ -15,21 +15,25 @@ export default function P2CChallenge() {
     await sendRawTransaction(createP2CChallengeTx, authToken);
   };
 
-  const handleDone = async (event) => {
-    event.preventDefault();
-    const resolveP2CChallengeTx = generateResolveP2CChallengeTx(
-      "0x51A41370827366087f7861d350781c790d937F16",
-      0
-    );
+  const handleDone = async () => {
+    console.log("resolving the challenge");
 
-    await sendRawTransaction(resolveP2CChallengeTx, authToken);
+    
+      const resolveP2CChallengeTx = generateResolveP2CChallengeTx(
+        "0x51A41370827366087f7861d350781c790d937F16",
+        4
+      );
+  
+      await sendRawTransaction(resolveP2CChallengeTx, authToken);
+    
+    
   };
 
   return (
     <div>
       <div className="flex flex-col gap-2 px-4">
         <div
-          href={"/"}
+         
           className="relative bg-[#4d4d4d] border-2 border-[#3E3E3E] w- h-full rounded-lg"
         >
           <img
