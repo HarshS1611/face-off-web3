@@ -27,8 +27,8 @@ const ModalChallenge = ({ open, handleClose }) => {
     target: "",
     targetType: "meters",
     challengeType: "",
-    startDate: "",
-    endDate: "",
+    startDate: "24/11/2024",
+    endDate: "02/12/2024",
     wagerAmount: 0.0001,
     wagerCurrency: "POL",
   });
@@ -101,15 +101,15 @@ const ModalChallenge = ({ open, handleClose }) => {
         polygonWallet?.address,
         formData.wagerAmount
       );
-  
+
       // Send the raw transaction to the blockchain
       await sendRawTransaction(createP2PChallengeTx, authToken);
-  
+
       // Fetch the next challenge ID from the blockchain
       const id = await getNextChallengeId();
       console.log("Your ID is:", id);
       console.log(formData);
-  
+
       // If the ID is successfully retrieved, make the POST request
       if (id) {
         const challengeData = {
@@ -121,14 +121,18 @@ const ModalChallenge = ({ open, handleClose }) => {
           amount: formData.wagerAmount,
           wagerCurrency: formData.wagerCurrency,
         };
-  
+
         // Make the POST request to your backend API
-        const response = await axios.post("http://localhost:3001/challenges", challengeData);
+        const response = await axios.post(
+          "http://localhost:3001/challenges",
+          challengeData
+        );
         // console.log(response.data._id);
         // localStorage.setItem("id", response.data._id);
-  
+
         // Log the response from the API
         console.log("Challenge created successfully:", response.data);
+        window.location.href = `/p2p`;
       } else {
         console.error("Failed to retrieve challenge ID.");
       }
@@ -137,7 +141,6 @@ const ModalChallenge = ({ open, handleClose }) => {
     }
   };
 
-  
   useEffect(() => {
     fetchWallets();
   }, []);
@@ -343,7 +346,7 @@ const ModalChallenge = ({ open, handleClose }) => {
               <label className="block text-sm font-medium">
                 Connected Wallet
               </label>
-              <p className="border border-gray-300 rounded-lg p-2">
+              <p className="border border-gray-300 rounded-lg text-ellipsis">
                 {polygonWallet ? polygonWallet.address : " 0x123...456"}
               </p>
             </div>

@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { generateJoinP2PChallengeTx, resolveP2PChallenge, sendRawTransaction } from "../../blockchain/main";
+import {
+  generateJoinP2PChallengeTx,
+  resolveP2PChallenge,
+  sendRawTransaction,
+} from "../../blockchain/main";
 import axios from "axios";
 
 export default function Challenge() {
-
   const { id } = useParams(); // Get the dynamic id from the URL
   console.log("Challenge ID:", id); // Log the id to the console
 
-   const authToken = localStorage.getItem("authToken"); // Get auth token from localStorage
+  const authToken = localStorage.getItem("authToken"); // Get auth token from localStorage
   // console.log(authToken, "nepali auth");
-  
+
   const [wallets, setWallets] = useState(null);
 
   const [hasJoined, setHasJoined] = useState(false);
@@ -19,13 +22,13 @@ export default function Challenge() {
   const [distances, setDistances] = useState({ activity1: 0, activity2: 0 });
   const [pollInterval, setPollInterval] = useState(null); // To store the poll interval ID
 
-  const [challengeData , setChallengeData] = useState({
+  const [challengeData, setChallengeData] = useState({
     amount: 0,
     category: "",
     challengeName: "",
     target: "",
     targetType: "",
-    idd:"",
+    idd: "",
   });
   const fetchWallets = async () => {
     const options = {
@@ -58,7 +61,7 @@ export default function Challenge() {
           challengeName: data.challengeName,
           target: data.target,
           targetType: data.targetType,
-          idd: data.id
+          idd: data.id,
         });
       })
       .catch((error) => {
@@ -71,42 +74,40 @@ export default function Challenge() {
   }, [challengeData]);
 
   const handleJoinChallenge = async () => {
-    const generateTxn  = await generateJoinP2PChallengeTx(polygonWallet.address, challengeData.idd, challengeData.amount);
-    await sendRawTransaction(generateTxn, authToken)
+    const generateTxn = await generateJoinP2PChallengeTx(
+      polygonWallet.address,
+      challengeData.idd,
+      challengeData.amount
+    );
+    await sendRawTransaction(generateTxn, authToken);
     setIsActive(true);
-    const postActivity1 = fetch(
-      "http://localhost:3001/activities1",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: "Temp request1",
-          startTime: "2024-12-01T06:00:00Z",
-          endTime: "2024-12-01T07:00:00Z",
-          startDistance: 0,
-          endDistance: 0,
-        }),
-      }
-    ).then((response) => response.json());
+    const postActivity1 = fetch("http://localhost:3001/activities1", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: "Temp request1",
+        startTime: "2024-12-01T06:00:00Z",
+        endTime: "2024-12-01T07:00:00Z",
+        startDistance: 0,
+        endDistance: 0,
+      }),
+    }).then((response) => response.json());
 
-    const postActivity2 = fetch(
-      "http://localhost:3001/activities2",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: "Temp request2",
-          startTime: "2024-12-01T06:00:00Z",
-          endTime: "2024-12-01T07:00:00Z",
-          startDistance: 0,
-          endDistance: 0,
-        }),
-      }
-    ).then((response) => response.json());
+    const postActivity2 = fetch("http://localhost:3001/activities2", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: "Temp request2",
+        startTime: "2024-12-01T06:00:00Z",
+        endTime: "2024-12-01T07:00:00Z",
+        startDistance: 0,
+        endDistance: 0,
+      }),
+    }).then((response) => response.json());
 
     Promise.all([postActivity1, postActivity2])
       .then(([activity1Data, activity2Data]) => {
@@ -125,7 +126,7 @@ export default function Challenge() {
   };
 
   const startPolling = (activity1Id, activity2Id) => {
-    const pollIntervalId = setInterval(async() => {
+    const pollIntervalId = setInterval(async () => {
       const randomNum1 = Math.floor(Math.random() * 5) + 1;
       const randomNum2 = Math.floor(Math.random() * 5) + 1;
 
@@ -135,52 +136,53 @@ export default function Challenge() {
           .then((data) => {
             const updatedDistance = data.endDistance + randomNum1;
             setDistances((prev) => ({ ...prev, activity1: updatedDistance }));
-            return fetch(
-              `http://localhost:3001/activities1/${activity1Id}`,
-              {
-                method: "PATCH",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ endDistance: updatedDistance }),
-              }
-            ).then((response) => response.json());
+            return fetch(`http://localhost:3001/activities1/${activity1Id}`, {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ endDistance: updatedDistance }),
+            }).then((response) => response.json());
           }),
         fetch(`http://localhost:3001/activities2/${activity2Id}`)
           .then((response) => response.json())
           .then((data) => {
             const updatedDistance = data.endDistance + randomNum2;
             setDistances((prev) => ({ ...prev, activity2: updatedDistance }));
-            return fetch(
-              `http://localhost:3001/activities2/${activity2Id}`,
-              {
-                method: "PATCH",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ endDistance: updatedDistance }),
-              }
-            ).then((response) => response.json());
+            return fetch(`http://localhost:3001/activities2/${activity2Id}`, {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ endDistance: updatedDistance }),
+            }).then((response) => response.json());
           }),
       ])
-        .then(async([activity1Update, activity2Update]) => {
+        .then(async ([activity1Update, activity2Update]) => {
           console.log("Updated Activity 1:", activity1Update);
           console.log("Updated Activity 2:", activity2Update);
 
-if (activity1Update.endDistance >= 30) {
+          if (activity1Update.endDistance >= 30) {
             console.log("Activity 1 Wins!");
             clearInterval(pollIntervalId); // Stop polling
-  setPollInterval(null); // Clear polling state
-   const rawTxn = await  resolveP2PChallenge(polygonWallet.address, challengeData.idd)
-   await sendRawTransaction(rawTxn, authToken)
+            setPollInterval(null); // Clear polling state
+            const rawTxn = await resolveP2PChallenge(
+              polygonWallet.address,
+              challengeData.idd
+            );
+            await sendRawTransaction(rawTxn, authToken);
             alert("Athlete 1 Wins!"); // Alert when Athlete 1 wins
           } else if (activity2Update.endDistance >= 30) {
             console.log("Activity 2 Wins!");
             clearInterval(pollIntervalId); // Stop polling
             setPollInterval(null); // Clear polling state
-            const rawTxn = await resolveP2PChallenge(polygonWallet.address, challengeData.idd)
-            await sendRawTransaction(rawTxn, authToken)
+            const rawTxn = await resolveP2PChallenge(
+              polygonWallet.address,
+              challengeData.idd
+            );
+            await sendRawTransaction(rawTxn, authToken);
             alert("Athlete 2 Wins!"); // Alert when Athlete 2 wins
+            window.location.href = "/"; // Redirect to the home page
           }
         })
         .catch((error) => {
@@ -210,25 +212,33 @@ if (activity1Update.endDistance >= 30) {
             alt="running"
             className="w-full h-52 object-cover"
           />
-          <p className="text-xl font-bold my-1 mx-5">{challengeData.challengeName}</p>
+          <p className="text-xl font-bold my-1 mx-5">
+            {challengeData.challengeName}
+          </p>
           {/* <p className="text-sm font-medium my-1 mx-5">from 2 Dec</p> */}
           <div>
             <p className="p-6 text-lg font-bold text-white">
               About the challenge
             </p>
             <p className="px-6 text-base font-normal text-white">
-  This challenge is a <span className="font-semibold">{challengeData.category}</span> challenge, where participants compete to achieve the specified goal. The challenge is designed to test your endurance, skill, and commitment. Take on the challenge to push your limits and earn rewards based on your performance!
-</p>
-
+              This challenge is a{" "}
+              <span className="font-semibold">{challengeData.category}</span>{" "}
+              challenge, where participants compete to achieve the specified
+              goal. The challenge is designed to test your endurance, skill, and
+              commitment. Take on the challenge to push your limits and earn
+              rewards based on your performance!
+            </p>
           </div>
           <div className="flex justify-between px-2">
             <div className="flex flex-col gap-2 my-10 px-4">
               <p className="text-lg font-bold">Target:</p>
-              <p className="text-sm font-medium">{challengeData.target} {challengeData.targetType}</p>
+              <p className="text-sm font-medium">
+                {challengeData.target} {challengeData.targetType}
+              </p>
             </div>
             <div className="flex flex-col gap-2 my-10 px-4">
               <p className="text-lg font-bold">Reward:</p>
-              <p className="text-sm font-medium">{challengeData.amount*2}</p>
+              <p className="text-sm font-medium">{challengeData.amount * 2}</p>
             </div>
           </div>
         </div>

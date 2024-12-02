@@ -12,8 +12,14 @@ export default function ChallengeCard({ challenge }) {
             <h3 className="flex w-full pt-4 pb-2 text-xl font-thunder tracking-wide font-bold text-white">
               {challenge.challengeName}
             </h3>
-            <p className="bg-[#E9C500] dm-mono-regular bg-opacity-40 text-xs mt-2 font-medium text-[#F0CA00] px-3 py-1 rounded-md">
-              {challenge.status || "Active"}
+            <p
+              className={`${
+                challenge.status === "Active"
+                  ? "bg-[#03EF1B] text-[#03EF1B]"
+                  : "bg-[#E9C500] text-[#E9C500]"
+              } dm-mono-regular bg-opacity-40 text-xs mt-2 font-medium px-3 py-1 rounded-md`}
+            >
+              {challenge.status || "Upcoming"}
             </p>
           </div>
           <p className="text-white text-sm py-1">{challenge.category}</p>
